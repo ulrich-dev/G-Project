@@ -1,0 +1,9 @@
+.c-container {
+    border: 1px solid #d8dde6;
+    margin: 0px 0 0px 0;
+}
+
+:host {
+    --primaryColor:  rgb(168, 117, 255);
+    --secondaryColor:#dfdbfb;
+ }

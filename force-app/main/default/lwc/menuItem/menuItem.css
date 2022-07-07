@@ -1,0 +1,49 @@
+.slds-box{
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-color: var(--secondaryColor);
+}
+.custom-box{
+    letter-spacing: .28px;
+    color: #979797;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.sub-item-style{
+    letter-spacing: .28px;
+    color: #979797;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.title-menu{
+    cursor: pointer;
+} 
+.title-menu :hover{
+    background-color: #f8f9f9
+} 
+.selected{
+    background-color: #f8f9f9;
+}
+.f-color{
+    --lwc-colorTextIconDefault: var(--primaryColor);
+}
+.sub-item-style{
+    cursor: pointer;
+}
+.sub-item-style:hover{
+    background-color: #f4f4f7;
+}
+.new-task{
+    float: right;
+    font-size: 7px;
+    color: rgb(224, 52, 52);
+    font-family: system-ui;
+}
+.new-task:hover{
+    color: var(--primaryColor);
+}
+
+.utility-icon{
+    float: right;
+}

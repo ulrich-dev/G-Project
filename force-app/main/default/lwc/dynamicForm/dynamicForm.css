@@ -1,0 +1,33 @@
+.form-section{
+    padding: 10px;
+}
+lightning-input, lightning-combobox, lightning-textarea{
+    --lwc-brandAccessibleActive:#fa3179;
+    --lwc-colorTextIconDefault: #22b2ff;
+    --lwc-borderWidthThin: 2px;
+    --lwc-borderRadiusMedium: 0.6rem;
+    --lwc-colorBorderInput: #2a2e43;
+    --lwc-colorBackgroundInput: #fcfcff;
+    --lwc-colorTextLabel: #2a2e43;
+    --lwc-spacingXSmall: 1rem;
+    /* required asteric color */
+    --lwc-colorTextError:  #fa3179;
+
+    --lwc-colorBorderError:rgb(240, 93, 93);
+    font-weight: 700;
+    --lwc-formLabelFontSize:0.8rem;
+    --lwc-colorTextLabel:rgb(34, 32, 32);
+}
+.slds-input{
+    font-style: italic;
+}
+.title{
+    font-weight: 600; 
+}
+/* lightning-combobox{
+    --lwc-colorTextIconDefault: #848484;
+} */
+lightning-textarea{
+    --sds-c-textarea-sizing-min-height: 165px;
+    width: 557px;
+}

@@ -1,0 +1,20 @@
+.c-container {
+    border: 1px solid #d8dde6;;
+    height: 420px;
+}
+
+.icon-color{
+    background-color: var(--primaryColor);
+}
+.slds-box{
+    border-radius: 0%;
+}
+.horizontale-line{
+    border:3px,6px,8px,9px;
+    border-right: none;
+    border-left:none;
+    border-bottom:none;
+}
+.utility-icon{
+    float: right;
+}

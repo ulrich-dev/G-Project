@@ -1,0 +1,50 @@
+.sub-header1{
+    border-radius: 0%;
+    border: 1px solid silver;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+
+}
+.sub-Header2{
+    border: 1px solid silver;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0%;
+}
+.f-color{
+    background-color: var(--primaryColor);
+}
+.title-box{
+    height:30px ;
+    width: 3%;
+    display: flex;
+    text-align: center;
+}
+
+.project-name{
+    font-size: large;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header-item{
+    border: 1px solid silver;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+}
+
+.bgColor{
+    background-color: #dfdbfb;
+}
+.box-menu{
+    /* border: 1px solid var(--primaryColor); */
+    cursor: pointer;
+}
+.box-menu:hover{
+    background-color: #dfdbfb;
+}
+input{
+    border: none;
+}

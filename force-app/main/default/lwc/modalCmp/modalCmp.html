@@ -1,0 +1,29 @@
+<template>
+<div>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+         <!-- modal header start -->
+           <header class="slds-modal__header">
+               <span>
+                   <span class="slds-text-heading_medium slds-hyphenate">{title}</span>
+                   <span class="close-box slds-p-around_xx-small">
+                       <lightning-icon class="icon-color" onclick={closeModal}  icon-name="utility:close" size="small" alternative-text="adduser!" title="Warning"></lightning-icon>
+                    </span>
+               </span>
+           </header>
+       
+           <!-- modal body start -->
+           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <c-dynamic-form inputs-items={items}></c-dynamic-form>
+        </div>
+ 
+           <!-- modal footer start-->
+           <footer class="slds-modal__footer">
+              <button class="slds-button" onclick={save}>Save</button>
+           </footer>
+        
+        </div>
+     </section>
+     <div class="slds-backdrop slds-backdrop_open"></div>
+</div>
+</template>

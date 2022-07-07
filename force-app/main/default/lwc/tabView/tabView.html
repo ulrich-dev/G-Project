@@ -1,0 +1,31 @@
+<template>
+    <div class="c-container slds-scrollable">
+        <lightning-layout multiple-rows="true" class="slds-p-top_small">
+                    <lightning-layout-item size="2" class="">
+                        <c-drag-list-container name="open" onnewtask={handleNewTask}  title={open.title} items={open.selectedItems} onstartmove={handleDragStart}
+                                onendmove={handleDragComplete}>
+                        </c-drag-list-container>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" class="">
+                        <c-drag-list-container name="inprogress" onnewtask={handleNewTask} title={inProgress.title} items={inProgress.selectedItems} onstartmove={handleDragStart}
+                                onendmove={handleDragComplete}>
+                        </c-drag-list-container>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" class="">
+                        <c-drag-list-container name="completed" onnewtask={handleNewTask} title={completed.title} items={completed.selectedItems} onstartmove={handleDragStart}
+                                onendmove={handleDragComplete}>
+                        </c-drag-list-container>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" class="">
+                        <c-drag-list-container name="test" title={test.title} onnewtask={handleNewTask} items={test.selectedItems} onstartmove={handleDragStart}
+                            onendmove={handleDragComplete}>
+                        </c-drag-list-container>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" class="">
+                        <c-drag-list-container name="closed" onnewtask={handleNewTask} title={closed.title} items={closed.selectedItems} onstartmove={handleDragStart}
+                            onendmove={handleDragComplete}>
+                        </c-drag-list-container>    
+                    </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

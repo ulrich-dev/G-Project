@@ -1,0 +1,69 @@
+<template>
+    <template if:true={isSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <section class="form-section"> 
+        <lightning-layout multiple-rows>
+            <template if:true={inputsItems} for:each={inputsItems} for:item="item">
+                <lightning-layout-item key={item.name} size="12" small-device-size="6" medium-device-size="4" large-device-size="4" padding="horizontal-medium" class="slds-m-vertical_small slds-m-horizontal_none">
+                
+                    <template if:false={item.picklist}>
+                        <template if:false={item.textarea}>
+                        <lightning-input 
+                        
+                        field-level-help={item.helpText}
+                        placeholder={item.placeholder}
+                        data-id={item.name}  
+                        type={item.type} 
+                        required={item.required} 
+                        label={item.label}   
+
+                        class="name" 
+                        value={item.value}
+                        max={item.max}
+                        max-length={item.maxlength}
+                        pattern={item.pattern}
+                       
+                        ></lightning-input>
+                        <!--  message-when-value-missing='Complete this field.(custom message)' -->
+                    </template>
+                   </template>
+                    <template if:true={item.picklist}>
+                        <lightning-combobox
+                                field-level-help={item.helpText}
+                                data-id={item.name}
+                                name={item.name}
+                                label={item.label}
+                                value={item.value}
+                                placeholder={item.placeholder}
+                                options={item.options}
+                                onchange={handleChange}
+                                required={item.required}
+                                
+                        ></lightning-combobox>
+                    <!-- message-when-value-missing={item.valueMissing}  -->
+                    </template>
+                   
+                </lightning-layout-item>
+                    <template if:true={item.textarea}>
+                            <lightning-layout-item key={item.name} size="12" small-device-size="12" medium-device-size="12" large-device-size="12" padding="horizontal-medium" class="slds-m-vertical_small slds-m-horizontal_none">
+                            <lightning-textarea 
+                            field-level-help={item.helpText}
+                            placeholder={item.placeholder}
+                            data-id={item.name}  
+                            type={item.type} 
+                            required={item.required} 
+                            label={item.label}   
+                            class="name" 
+                            value={item.value}
+                            max={item.max}
+                            max-length={item.maxlength}
+                            pattern={item.pattern} >       
+                        </lightning-textarea>
+                        </lightning-layout-item>
+                 </template> 
+        </template>
+        </lightning-layout> 
+    </section>
+</br>
+</template>

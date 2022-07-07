@@ -1,0 +1,34 @@
+<template>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item flexibility="grow" size="12" class="sub-header1" >
+                <lightning-layout class="slds-scrollable" multiple-rows="true" vertical-align="center">
+                    <lightning-layout-item class="slds-m-top_small slds-m-left_small" size="2">
+                        <lightning-icon class="slds-m-bottom_small" icon-name="custom:custom57" title="custom57"></lightning-icon>
+                        <span class="slds-m-left_x-small slds-text-title">{project.Name}</span>
+                    </lightning-layout-item>
+                        <template for:each={menuItem} for:item="item">
+                            <lightning-layout-item key={item.name} class="slds-m-top_small slds-m-bottom_small slds-m-left_xx-small header-item">
+                                <span class="slds-m-around_small box-menu" data-id={item.name} onclick={handleclick}>
+                                    <lightning-icon class="" size="xx-small" icon-name={item.iconName} alternative-text="list"  title="list"></lightning-icon>   
+                                    <span  class="slds-m-left_xx-small" >
+                                        {item.label}
+                                    </span>
+                                </span> 
+                            </lightning-layout-item>
+                        </template>
+                    <lightning-layout-item class="slds-m-bottom_small slds-m-top_small slds-m-left_xx-small header-item">
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="grow" size="12" class="sub-Header2">
+                <div class="slds-p-top_xx-small slds-m-left_small slds-m-bottom_xx-small lgc-bg">
+                    <input type="text" placeholder="search" />
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" class="bgColor">
+
+            </lightning-layout-item>
+        </lightning-layout>
+</template>

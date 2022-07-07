@@ -1,0 +1,34 @@
+<template>
+    <div class={bgColor} data-id={item.name} onclick={handleClick}>
+        <lightning-layout multiple-rows class="slds-box">
+            <lightning-layout-item flexibility="grow" size="12" small-device-size="3" medium-device-size="6" large-device-size="12"  >
+            <lightning-layout>
+                <lightning-layout-item flexibility="grow">
+                    <span class="custom-box">{item.title} 
+                    </span>
+                    <span  class="utility-icon">
+                        <template if:true={isResource}>
+                            <span><lightning-icon onclick={handleNewResource} class="f-color slds-p-right_medium" icon-name="utility:adduser" size="x-small" alternative-text="adduser!" title="Warning"></lightning-icon></span>
+                        </template>
+                        <span><lightning-icon icon-name={item.incon_name} size="x-small" alternative-text="Warning!" title="Warning"></lightning-icon></span>
+                    </span>
+                </lightning-layout-item>
+            </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <template if:true={item.isActive}>
+        <lightning-layout class="" multiple-rows="true">
+            <template if:true={item.subItem}>
+                <template for:each={item.subItem} for:item="item">
+                    <lightning-layout-item class="slds-p-left_large slds-p-top_x-small slds-p-bottom_x-small sub-item-style" size="12" key={item.label}>
+                        <span class="slds-p-bottom_small">{item.label}</span>
+                        <template if:true={isResource}>
+                            <span onclick={handleNewTask} class="new-task slds-p-right_medium"> + New Task</span>
+                        </template>  
+                    </lightning-layout-item>
+                </template>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

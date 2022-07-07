@@ -1,0 +1,56 @@
+.slds-box{
+    border-top: 3px solid var(--primaryColor);
+    border-bottom: 3px solid silver;
+    background-color: white;
+}
+.droparea{
+    min-height: 60px;
+    
+}
+
+.task-box{
+    border: 1px solid rgb(207, 207, 207);
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 12px;
+}
+.bottom:focus{
+    border: none;
+}
+.content-flex{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+}
+
+.icon-move{
+    cursor: pointer;
+    --lwc-colorTextIconDefault :orange;
+}
+.icon-edit{
+    --lwc-colorTextIconDefault : var(--primaryColor);
+    cursor: pointer;
+}
+
+.task-name{
+    font-size: 13px;
+    font-weight: bold;
+}
+.slds-text-body_small{
+    font-size: 11px;
+}
+.delete-icon{
+    --lwc-colorTextIconDefault :red;
+    cursor: pointer;
+}
+.row{
+    background: #dfdbfb;
+}
+.raton-btm{
+    display: block;
+    float: right;
+    align-self: flex-end;
+}

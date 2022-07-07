@@ -1,0 +1,76 @@
+.item-line{
+    background-color: white;
+    border: none;
+}
+.line-bloc{
+    background-color: #dfdbfb;
+    height:  318px;
+
+}
+.title-box{
+    width: fit-content;
+    background-color: var(--primaryColor);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+.bg-color{
+    --lwc-colorTextIconDefault : white;
+}
+
+span{
+    font-variant-caps: all-petite-caps;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.icon-right{
+    --lwc-colorTextIconDefault : var(--primaryColor);
+}
+.icon-ban{
+    --lwc-colorTextIconDefault : orange;
+
+}
+.new-task{
+    cursor: pointer;
+}
+.new-task:hover{
+    color: var(--primaryColor);
+    cursor: pointer;
+}
+
+.containt-box{
+    display: flex;
+}
+
+
+.slds-text-title {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.icon-edit{
+    --lwc-colorTextIconDefault : var(--primaryColor);
+    cursor: pointer;
+
+}
+
+.icon-delete{
+    --lwc-colorTextIconDefault : red;
+    cursor: pointer;
+
+}
+
+.assignTo-box{
+    border-radius: 52px;
+    width: 22px;
+    text-align-last: center;
+    background-color: var(--primaryColor);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.date-echeance{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.icon-attach{
+    cursor: pointer;
+}

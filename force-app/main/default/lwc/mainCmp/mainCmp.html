@@ -1,0 +1,20 @@
+<template>
+        <div class="c-container slds-card">
+            <lightning-layout>
+                <lightning-layout-item flexibility="grow" size="3">
+                    <c-nav-bar-menu  onnewtask={handleNewTask} allrss={allrss} onnewresource={handleNewResource}></c-nav-bar-menu>
+                </lightning-layout-item>
+                <template if:true={isNewTask}>
+                    <c-modal-cmp onclosemodal={closeModal} onapexrefresh={apexRefresh} items={newTaskItems} title={title}></c-modal-cmp>
+                </template>
+                <template if:true={isNewResource}>
+                    <c-modal-cmp onclosemodal={closeModal} onapexrefresh={apexRefresh} items={newResourceItems} title={title}></c-modal-cmp>
+                </template>
+                <lightning-layout-item flexibility="grow" size="9">
+                    <c-header-Cmp onhandleactivemenu={handleactivemenu} project={project} ></c-header-Cmp>
+                    <c-section-Cmp activemenu={activeMenu} onrefres_apex={apexRefresh} onnewtask={handleNewTask} tasks={tasks} > </c-section-Cmp>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </div>
+</template>

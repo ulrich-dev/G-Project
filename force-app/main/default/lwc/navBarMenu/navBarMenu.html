@@ -1,0 +1,28 @@
+<template>
+    <div class="c-container">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" padding="around-small">
+                <lightning-layout>
+                        <lightning-layout-item flexibility="grow" size="1"  padding="around-small">
+                            <lightning-card title="Static Resource Example LWC" icon-name="myResource">
+                                <div class="slds-m-around_medium">
+                                   logo
+                                </div>
+                            </lightning-card>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="utility-icon slds-m-right_medium" size="2" padding="around-small">
+                            <lightning-icon icon-name="utility:settings" size="small" alternative-text="Warning!" title="Warning"></lightning-icon>
+                        </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <template if:true={items}>
+                    <template for:each={items} for:item="item">
+                           <c-menu-item onnewtask={handleNewTask} onnewresource={handleNewResource} onhandleactivemenu={handleclick} key={item.name} menuitem={item}></c-menu-item>
+                    </template>
+                </template>
+                <div class="slds-box horizontale-line"></div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>
