@@ -147,9 +147,9 @@ export default class SectionCmp extends LightningElement {
         }
     }
     //fire event new task
-    handleNewTask(){
-        const evt = new CustomEvent('newtask', {detail: "newTask"});
-        this.dispatchEvent(evt);
+    handleNewTask(event){
+        console.log('event');
+        dispash_event('task_event',this,event.detail)
     }
 
     // aprex refresh

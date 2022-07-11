@@ -22,7 +22,7 @@ export default class NavBarMenu extends LightningElement {
         if(value){
                 this.items.forEach(element => {
                     if(element.name === 'Resources'){
-                            element.subItem =[...value.map(item =>({
+                            element.subItem =[...value.map(item =>({...item,
                                                     label:item.Name,
                                                     name:item.Id
                                                 }))];

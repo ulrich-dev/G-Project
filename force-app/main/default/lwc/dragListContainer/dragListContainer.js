@@ -32,7 +32,10 @@ export default class DragListContainer extends LightningElement {
     )
   }
   handleNewTask(){
-     const evt = new CustomEvent('newtask', {detail: "newTask"});
+     const evt = new CustomEvent('newtask', {detail: {
+                                                        action : "newTask",
+                                                        Id: '',    
+                                                    }});
      this.dispatchEvent(evt);
   }
   deleteTask(event){

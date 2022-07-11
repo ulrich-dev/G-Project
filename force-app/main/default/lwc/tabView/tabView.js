@@ -126,8 +126,8 @@ set tasks(tasksList) {
        
     }
     //dispash new task event
-    handleNewTask(){
-          const evt = new CustomEvent('newtask', {detail: "newTask"});
+    handleNewTask(event){
+          const evt = new CustomEvent('newtask', {detail: event.detail});
             this.dispatchEvent(evt);
     }
 

@@ -9,7 +9,7 @@
                         <c-full-calendar-v1 height = "300"></c-full-calendar-v1>
                     </template>
                     <template if:true={isTab}>
-                        <c-tab-view onnewtask={handleNewTask} tasks={tasks}></c-tab-view>
+                        <c-tab-view ontaskevent={handleNewTask} tasks={tasks}></c-tab-view>
                     </template>
                     <template if:true={isGantt}>
                         <c-gantt-view height="400"></c-gantt-view>

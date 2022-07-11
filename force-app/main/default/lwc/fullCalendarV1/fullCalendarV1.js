@@ -122,6 +122,10 @@ export default class FullCalendarV1 extends NavigationMixin(LightningElement) {
       })
   }
 
+  handleClick(){
+    console.log('onclick on the event box');
+  }
+
   closeModal(){
     this.selectedEvent = undefined;
   }

@@ -1,5 +1,7 @@
 import { api,track,LightningElement } from 'lwc';
 import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
+import LightningConfirm from 'lightning/confirm';
+
 
 
 
@@ -24,31 +26,32 @@ export default class ListView extends LightningElement {
         
     }
 
-    handleNewTask(){
-        dispash_event('newtask',this);
+    handleNewTask(event){
+        console.log('new event action');
+        dispash_event('taskevent',this,{action:'newtask',Id :''});
     }
 
-    handleEdit(){  
-        dispash_event('edittask',this);
+    handleEdit(event){  
+        dispash_event('task_event',this,{action:'edittask',Id :event.currentTarget.dataset.Id});
+
     }
 
-    handleAttach(){
-       dispash_event('attachtask',this);
+    handleAttach(event){
+       dispash_event('task_event',this,{action:'atachement',Id :event.currentTarget.dataset.Id});
     }
-    handleDelete(event){
-        console.log('console.log');
+    async handleDelete(event){
         let taskId = event.currentTarget.dataset.id;
-        let rep = delete_task(taskId,this);
-        toast_event('deleted','deleted successful','success',this);
-
-       
-
-
+        console.log('console.log');
+        const result = await LightningConfirm.open({
+            variant: 'brand',
+            label: 'Confirm Delete',
+            header:'Confirm delete',
+            // setting theme would have no effect
+        });
+        if(result){      
+                let rep = delete_task(taskId,this);
+                toast_event('deleted','deleted successful','success',this);
+        }
     }
-
-
- 
-   
-
 
 }

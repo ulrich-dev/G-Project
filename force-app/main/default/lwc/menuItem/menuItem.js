@@ -30,8 +30,13 @@ handleClick(event){
 }
 
 //this function is use to fire new event action 
-handleNewTask(){
-    const evt = new CustomEvent('newtask', {detail: "newTask"});
+handleNewTask(event){
+    let resId= event.currentTarget.dataset.id;
+    const evt = new CustomEvent('newtask', {detail: {
+                                                        action : "newTask",
+                                                        Id: resId,    
+                                                    }
+                                            });
     this.dispatchEvent(evt);
 }
 

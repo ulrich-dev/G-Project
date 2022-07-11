@@ -18,6 +18,7 @@ export default class MainCmp extends LightningElement {
     project={name:''};
     title
     options=[];
+    resId ='';
    
 
     @wire(getTask, { recordId: '$recordId' })
@@ -48,10 +49,12 @@ export default class MainCmp extends LightningElement {
     }
 
     handleNewTask(event){
-        let _active_menu = event.detail;
         console.log("newtask in main component ");
-        this.isNewTask = _active_menu === "newTask"?true : false;
+        let _active_menu = event.detail.action;
+        this.resId = event.detail.Id;
+        this.isNewTask = _active_menu === "newtask"?true : false;
         this.title ="New Task";
+
     }
 
     newTask
@@ -105,8 +108,41 @@ export default class MainCmp extends LightningElement {
                 value : '',
                 max :15,
                 maxlength :30,
-                pattern :'[A-Za-z0-9._-]+'
+                pattern :''
             },
+
+              {
+                picklist :false,
+                textarea :false,
+                helpText :'Start date',
+                name :'Startdate',
+                placeholder :'Start date',
+                PhoneNumber :'',
+                type :'date',
+                required :true,
+                label :'Start date',
+                value : '',
+                max :15,
+                maxlength :30,
+                pattern :''
+            },
+
+              {
+                picklist :false,
+                textarea :false,
+                helpText :'End date',
+                name :'End date',
+                placeholder :'End date',
+                PhoneNumber :'',
+                type :'date',
+                required :true,
+                label :'End date',
+                value : '',
+                max :15,
+                maxlength :30,
+                pattern :''
+            },
+
              {
                 picklist :true,
                 textarea :false,
@@ -134,7 +170,7 @@ export default class MainCmp extends LightningElement {
                 required :true,
                 label :'Resource',
                 options: [...this.allrss.map(item =>({ label:item.Name ,value:item.Id}))],
-                value : '',
+                value : this.resId !=''? this.allrss.filter(item => { return item.Id == this.resId; })[0].Id :'',
                 max :15,
                 maxlength :30,
             },

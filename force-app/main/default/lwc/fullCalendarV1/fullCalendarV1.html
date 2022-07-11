@@ -1,9 +1,7 @@
 <template>
-    <lightning-card  variant="Narrow"  
-      title="Full Calendar" icon-name="standard:event">
-      <div class="slds-grid">
+      <div class="slds-card slds-grid slds-scrollable" style="height:384px">
         <div class="slds-m-around_small">
-          <div id="calendar" class="fullcalendarjs"></div>
+          <div id="calendar" onclick={handleClick} class="fullcalendarjs"></div>
         </div>
       </div>
       <template if:true={selectedEvent}>
@@ -53,5 +51,4 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
       </template>
-    </lightning-card>
 </template>

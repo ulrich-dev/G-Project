@@ -6,7 +6,7 @@ import { createRecord, updateRecord, deleteRecord } from "lightning/uiRecordApi"
 const delete_task = (taskId,self) => {
    //Logic
     return deleteRecord(taskId,self).then(() => {
-        this.refresh_apex(self);
+        refresh_apex(self);
     });
 };
 
@@ -36,13 +36,13 @@ const create_resource = (taskId) => {
    return true;
 };
 
-const dispash_event =(eventName,self)=>{
-         const evt = new CustomEvent(eventName, {detail: "newTask"});
+const dispash_event =(eventName,self,evtDetail)=>{
+         const evt = new CustomEvent(eventName, {detail: evtDetail});
          self.dispatchEvent(evt);
 }
 
 const refresh_apex =(self)=>{
-         const evt = new CustomEvent('refres_apex', {detail: "newTask"});
+         const evt = new CustomEvent('refres_apex', {detail: ""});
          self.dispatchEvent(evt);
 }
 
