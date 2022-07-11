@@ -1,5 +1,7 @@
 import { track,api,LightningElement } from 'lwc';
 import myResource from '@salesforce/resourceUrl/myResource';
+import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
+
 
 
 
@@ -113,9 +115,7 @@ export default class NavBarMenu extends LightningElement {
 
 
             handleNewTask(event){
-                let _active_menu = event.detail;
-                const evt = new CustomEvent('newtask', {detail: _active_menu});
-                this.dispatchEvent(evt);
+               dispash_event('task_event',this,event.detail);
             }
 
             handleNewResource(event){

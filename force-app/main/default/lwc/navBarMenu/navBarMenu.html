@@ -18,7 +18,7 @@
             <lightning-layout-item size="12">
                 <template if:true={items}>
                     <template for:each={items} for:item="item">
-                           <c-menu-item onnewtask={handleNewTask} onnewresource={handleNewResource} onhandleactivemenu={handleclick} key={item.name} menuitem={item}></c-menu-item>
+                           <c-menu-item ontask_event={handleNewTask} onnewresource={handleNewResource} onhandleactivemenu={handleclick} key={item.name} menuitem={item}></c-menu-item>
                     </template>
                 </template>
                 <div class="slds-box horizontale-line"></div>

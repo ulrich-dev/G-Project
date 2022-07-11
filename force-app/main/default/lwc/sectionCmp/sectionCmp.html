@@ -3,13 +3,13 @@
         <lightning-layout horizontal-align="center" vertical-align="stretch">
             <lightning-layout-item size="12" flexibility="grow">
                     <template if:true={isListe}>
-                        <c-List-view tasks={taskList} onrefres_apex={handleApexRefresh} onnewtask={handleNewTask} ></c-List-view>
+                        <c-List-view tasks={taskList} onrefres_apex={handleApexRefresh} ontask_event={handleNewTask} ></c-List-view>
                     </template>
                     <template if:true={isCalenda}>
                         <c-full-calendar-v1 height = "300"></c-full-calendar-v1>
                     </template>
                     <template if:true={isTab}>
-                        <c-tab-view ontaskevent={handleNewTask} tasks={tasks}></c-tab-view>
+                        <c-tab-view ontask_event={handleNewTask} tasks={tasks}></c-tab-view>
                     </template>
                     <template if:true={isGantt}>
                         <c-gantt-view height="400"></c-gantt-view>

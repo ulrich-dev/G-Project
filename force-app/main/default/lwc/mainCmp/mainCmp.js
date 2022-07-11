@@ -53,6 +53,11 @@ export default class MainCmp extends LightningElement {
         let _active_menu = event.detail.action;
         this.resId = event.detail.Id;
         this.isNewTask = _active_menu === "newtask"?true : false;
+
+        if( _active_menu === "edittask"){
+              this.isNewTask = _active_menu === "edittask"?true : false;
+        }
+     
         this.title ="New Task";
 
     }

@@ -1,4 +1,6 @@
 import { track,api,LightningElement} from 'lwc';
+import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
+
 
 export default class MenuItem extends LightningElement {
 item;
@@ -32,12 +34,7 @@ handleClick(event){
 //this function is use to fire new event action 
 handleNewTask(event){
     let resId= event.currentTarget.dataset.id;
-    const evt = new CustomEvent('newtask', {detail: {
-                                                        action : "newTask",
-                                                        Id: resId,    
-                                                    }
-                                            });
-    this.dispatchEvent(evt);
+    dispash_event('task_event',this,{action:'newtask',Id :resId});
 }
 
 handleNewResource(event){
@@ -46,7 +43,5 @@ handleNewResource(event){
     this.dispatchEvent(evt);
 }
 
-
-
-
 }
+

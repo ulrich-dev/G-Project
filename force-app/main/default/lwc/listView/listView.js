@@ -28,7 +28,7 @@ export default class ListView extends LightningElement {
 
     handleNewTask(event){
         console.log('new event action');
-        dispash_event('taskevent',this,{action:'newtask',Id :''});
+        dispash_event('task_event',this,{action:'newtask',Id :''});
     }
 
     handleEdit(event){  
