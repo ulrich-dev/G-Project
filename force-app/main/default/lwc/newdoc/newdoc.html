@@ -1,0 +1,15 @@
+<template>
+   
+   <span class="slds-m-priority slds-m-bottom_x-large" title="priority" > </span>
+       
+        <!-- With icon-name -->
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-button-menu alternative-text="Show menu" menu-alignment="auto">
+                <template for:each={options} for:item="item" > 
+                <lightning-menu-item key={item.Id} value={item.value} label={item.label} prefix-icon-name={item.icon_name} class-name={item.color_name}></lightning-menu-item>
+            </template>
+               
+            </lightning-button-menu>
+        </div>
+   
+</template>

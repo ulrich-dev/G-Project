@@ -15,21 +15,12 @@ get tasks() {
 set tasks(tasksList) {
     console.log("tasksList",JSON.stringify(tasksList));
     if(tasksList){
-        this.open.selectedItems= [];
-        this.inProgress.selectedItems= [];
-        this.completed.selectedItems= [];
-        this.test.selectedItems= [];
-        this.closed.selectedItems= [];
-         tasksList.forEach(tasks => {
-        if(tasks.Status__c === OPEN) this.open.selectedItems.push({...tasks, iconName :"open"});
-        if(tasks.Status__c === IN_PROGRESS) this.inProgress.selectedItems.push({...tasks, iconName :"inProgress"});
-        if(tasks.Status__c === COMPLETED) this.completed.selectedItems.push({...tasks, iconName :"completed"});
-        if(tasks.Status__c === TEST) this.test.selectedItems.push({...tasks, iconName :"test"});
-        if(tasks.Status__c === CLOSED) this.closed.selectedItems.push({...tasks, iconName :"closed"});
-        
-        });
+        this.open = {...tasksList[0] };
+        this.inProgress = {...tasksList[1] };
+        this.completed = {...tasksList[2] };
+        this.test = {...tasksList[3] };
+        this.closed = {...tasksList[4] };
 
-     
     }
  
 }

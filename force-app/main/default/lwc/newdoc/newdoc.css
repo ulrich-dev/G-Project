@@ -1,0 +1,23 @@
+.lgc-bg-inverse {
+    background-color: rgb(22, 50, 92);
+}
+
+.bg-color{
+    --lwc-colorTextIconDefault :red;
+}
+
+.icon-righ{
+    --lwc-colorTextIconDefault :rgb(255, 251, 0);
+}
+
+.slds-truncate{
+    --lwc-colorTextIconDefault :rgb(0, 238, 255);
+
+}
+
+.assignTo{
+    --lwc-colorTextIconDefault :rgb(176, 193, 194);
+}
+.effacercolor{
+    --lwc-colorTextIconDefault :red;
+}

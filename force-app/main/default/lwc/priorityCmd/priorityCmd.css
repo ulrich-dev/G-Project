@@ -1,0 +1,25 @@
+.urgent{
+    --lwc-colorTextIconDefault: green;
+
+}
+.high{
+    --lwc-colorTextIconDefault :rgb(255, 251, 0);
+
+
+}
+.normal{
+    --lwc-colorTextIconDefault :rgb(34, 158, 167);
+
+}
+.low{
+    --lwc-colorTextIconDefault :rgb(22, 22, 202);
+
+
+}
+.closed{
+    --lwc-colorTextIconDefault :red;
+
+}
+lightning-button-menu:hover{
+    --lwc-colorTextIconDefault :none;
+}

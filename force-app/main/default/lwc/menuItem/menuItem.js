@@ -44,4 +44,3 @@ handleNewResource(event){
 }
 
 }
-

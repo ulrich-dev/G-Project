@@ -67,10 +67,17 @@ span{
     background-color: var(--primaryColor);
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
 }
 .date-echeance{
     font-family: Arial, Helvetica, sans-serif;
 }
 .icon-attach{
     cursor: pointer;
+}
+
+.assingnTo-text{
+    font-size: 8px;
+    color: #c11c1c;
+    font-family: Arial, Helvetica, sans-serif;
 }

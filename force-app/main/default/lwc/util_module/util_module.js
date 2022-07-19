@@ -10,18 +10,31 @@ const delete_task = (taskId,self) => {
     });
 };
 
-const create_task = (taskId) => {
-   //Logic
-   console.log("task id",taskId);
-   return true;
+const create_task = (data,self,ressource) => {
+
+     let resp = createRecord(data).then((res) => {
+                       refresh_apex(self);
+                       toast_event('update','update successful','success',self);
+                       if(ressource){
+                          create_Assigntask(res.id,ressource,self);
+                       }
+                    });
+   
 };
 
-
-const update_task = (taskId) => {
-   //Logic
-   console.log("task id",taskId);
-   return true;
-};
+const create_Assigntask =(taskId,ressId,self)=>{
+      const insert = {
+                      apiName: "Assigne_ressource__c",
+                              fields: {
+                                        Ressource__c : ressId,
+                                        task__c: taskId,
+                                      }
+                   };
+   return  createRecord(insert).then((res) => {
+                       refresh_apex(self);
+                       toast_event('update','update successful','success',self);
+                    });
+}
 
 
 const delete_resource = (taskId) => {
@@ -35,6 +48,17 @@ const create_resource = (taskId) => {
    console.log("task id",taskId);
    return true;
 };
+
+   const update_task = (data,self) => {
+                    console.log("updateTask",data);
+                    const update = {
+                        fields: data
+                    };
+                    return updateRecord(update).then(() => {
+                       refresh_apex(self);
+                       toast_event('update','update successful','success',self);
+                    });
+   }
 
 const dispash_event =(eventName,self,evtDetail)=>{
          const evt = new CustomEvent(eventName, {detail: evtDetail});

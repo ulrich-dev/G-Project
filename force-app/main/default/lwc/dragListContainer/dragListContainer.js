@@ -6,6 +6,14 @@ export default class DragListContainer extends LightningElement {
   @api name;
   @api title;
 
+  get itemsWrap(){
+      if(this.items){
+        this.items =[...this.items.map((item)=>({...item,Name:item.Name.length >7? item.Name.substring(0,6)+'...': item.Name   }))];
+      }
+
+    return this.items;
+  }
+
    cancel(event) {
     event.preventDefault();
     event.stopPropagation();

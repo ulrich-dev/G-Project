@@ -10,8 +10,8 @@ public with sharing class projectManagerCtl {
             Set<String> resourceIds = new Set<String>(); 
             Map<Id,Task__c> Tasks; 
             p =  [SELECT id,name FROM Projet__c WHERE id =:recordId];
-            Tasks = new Map<Id,Task__c>([SELECT Id,Name, Projet__c, Status__c, Priority__c, Commentaire__c, Due_Time__c , Start_date__c, End_date__c FROM Task__c WHERE Projet__c =: p.id]);
-            assTask = [SELECT id, task__c,Ressource__c  FROM Assigne_ressource__c WHERE task__c IN : Tasks.keySet()];
+            Tasks = new Map<Id,Task__c>([SELECT Id,Name, Projet__c,Ressource__c, Status__c,Description__c, Priority__c,Ressource__r.Name, Commentaire__c, Due_Time__c , Start_date__c, End_date__c FROM Task__c WHERE Projet__c =: p.id]);
+            assTask = [SELECT id, task__c,Ressource__c,Ressource__r.Name  FROM Assigne_ressource__c WHERE task__c IN : Tasks.keySet()];
             rss =[SELECT id, Prenom__c,Name , Hiring_date__c, Phone__c, Email__c FROM Ressource__c ORDER BY CreatedDate];
            
             return new Map<String,Object>{'p'=>p,'Tasks'=>Tasks.values(),'assTask'=>assTask,'allrss'=>rss};
@@ -37,5 +37,35 @@ public with sharing class projectManagerCtl {
 		return pickListValuesList;
     }
 
+    @AuraEnabled
+    public static String uploadFile(String fileName, String base64Data, Id recordId) {
+        // Decoding the base64Data
+        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
+        ContentVersion cv = new ContentVersion();
+            cv.Origin = 'H';
+            cv.PathOnClient = fileName; 
+            cv.ContentLocation = 'S'; 
+            cv.Title = fileName;
+            cv.PathOnClient = '/'+ fileName;
+            cv.VersionData = EncodingUtil.base64Decode(base64Data);
+            cv.IsMajorVersion =false; 
+            cv.FirstPublishLocationId = recordId;
+
+            Insert cv;
+        return 'File upload successfully!';
+    }
+
+
+    @AuraEnabled
+    public static List<String> getAllDocument(List<String> taskIds){
+        try {
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+
+
+        return new  List<String>();
+    }
   
 }

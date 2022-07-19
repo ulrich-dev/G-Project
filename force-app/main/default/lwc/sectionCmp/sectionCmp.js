@@ -16,6 +16,7 @@ export default class SectionCmp extends LightningElement {
 
     @track taskList=[];
     @track result
+    @track assTask
 
 
     @track 
@@ -74,11 +75,18 @@ export default class SectionCmp extends LightningElement {
         ]
     }
 
-
+    @api
+    get ass_task() {
+        return this.assTask;
+    }
+    set ass_task(value) {
+        this.assTask = value;
+        this.taskList =[...this.addAssignRess(this.taskList)];
+    }
 
    @api
    get tasks() {
-       return this.result;
+       return this.taskList;
    }
    set tasks(value) {
        this.result = value;
@@ -105,6 +113,7 @@ export default class SectionCmp extends LightningElement {
         this.taskList.push(this.test);
         this.taskList.push(this.closed);
         console.log(">>>>>>task list",this.taskList);
+        this.taskList =[...this.addAssignRess(this.taskList)];
     }
  
    }
@@ -156,6 +165,30 @@ export default class SectionCmp extends LightningElement {
 
     handleApexRefresh(){
         refresh_apex(this);
+    }
+
+    addAssignRess(taskList){
+        console.log("assign value", this.assTask );
+        if(this.assTask){
+            taskList =[...taskList.map((currentItem) => {
+                currentItem.selectedItems =[...currentItem.selectedItems.map((item)=>{
+                    let ressourcies =[];
+                    this.assTask.forEach(currentItem => {
+                            if( item.Id == currentItem.task__c)  ressourcies.push({ Id:currentItem.Ressource__c,
+                                                                                    Name :currentItem.Ressource__r.Name}); 
+                    });
+                    const dateOne = new Date(item.End_date__c); 
+                    const dateTwo = new Date(item.Start_date__c);
+                    let date_echeance = Math.abs(dateOne-dateTwo)/(1000 * 3600 * 24);
+                    return {...item,ress:ressourcies,firstOne : ressourcies.length>0? ressourcies[0].Name.substring(0, 1): "",IsAssign :ressourcies.length>0? true :false,date_echeance : date_echeance?date_echeance:"-" };
+                    
+                })]
+
+                return currentItem;
+            })];  
+        }
+
+        return taskList;
     }
       
 

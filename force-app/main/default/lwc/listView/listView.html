@@ -1,8 +1,8 @@
 <template>
     <div class="c-container slds-m-around_medium">
         <lightning-layout multiple-rows="true" class="slds-box line-bloc slds-scrollable slds-m-left_small">
-            <template if:true={result}>
-                <template  for:each={result} for:item="item">
+            <template if:true={tasks}>
+                <template  for:each={tasks} for:item="item">
                     <lightning-layout-item size="12" key={item.title}>
                         <lightning-layout  multiple-rows="true" key={item.title}>
                             <lightning-layout-item flexibility="grow" size="12">
@@ -36,24 +36,29 @@
                             <template if:false={item.minimize}>
                                 <template for:each={item.selectedItems} for:item="item" >
                                 <lightning-layout-item key={item.Id}  flexibility="grow" size="12">
-                                    <lightning-layout multiple-rows="true" class="item-line" >
-                                        <lightning-layout-item size="6" flexibility="grow">
+                                    <lightning-layout multiple-rows="true" vertical-align="center" class="item-line" >
+                                        <lightning-layout-item size="6" ali flexibility="grow">
                                             <span>
                                                 <lightning-icon class="icon-right slds-p-left_x-small" icon-name="utility:right" alternative-text="right" title="right" size="xx-small"></lightning-icon>
                                                 {item.Name}
                                                 <lightning-icon class="icon-edit slds-p-left_medium" data-id={item.Id} onclick={handleEdit}  icon-name="utility:edit" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
-                                                <lightning-icon class="icon-attach slds-p-left_x-small" data-id={item.Id} onclick={handleAttach} icon-name="utility:attach" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
+                                                <label for="upload">
+                                                    <lightning-icon class="icon-attach slds-p-left_x-small" data-id={item.Id} onclick={handleAttach} icon-name="utility:attach" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
+                                                    <input type="file" data-id={item.Id} onchange={handleFile} id="upload" style="display:none"/>
+                                                </label>
                                                 <lightning-icon class="icon-delete slds-p-left_x-small" data-id={item.Id}  onclick={handleDelete} icon-name="utility:delete" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
                                             </span>
                                         </lightning-layout-item>
                                         <lightning-layout-item class="slds-align_absolute-center" size="2" flexibility="grow">
-                                                <div class="assignTo-box slds-m-bottom_xx-small slds-m-top_xx-small">J</div>   
+                                                <div if:true={item.IsAssign} class="assignTo-box slds-m-bottom_xx-small slds-m-top_xx-small">{item.firstOne}</div>   
+                                                <div if:false={item.IsAssign} class="assingnTo-text slds-m-bottom_xx-small slds-m-top_xx-small">No assign</div>   
                                         </lightning-layout-item>
                                         <lightning-layout-item class="slds-align_absolute-center"  size="2" flexibility="grow">
-                                                <span class="date-echeance">34</span>   
+                                                <span class="date-echeance">{item.date_echeance}</span>   
                                         </lightning-layout-item>
                                         <lightning-layout-item  class="slds-align_absolute-center" size="2" flexibility="grow">
-                                            <lightning-icon class="icon-ban slds-m-left_medium" icon-name="utility:priority" size="x-small" alternative-text="adduser!" title="Warning"></lightning-icon>
+                                            <c-priority-cmd  onrefres_apex={handleApexRefresh} priority={item}></c-priority-cmd>
+                                            <!-- <lightning-icon class="Selected slds-m-left_medium" icon-name="utility:priority" size="x-small" alternative-text="adduser!" title="Warning"></lightning-icon> -->
                                         </lightning-layout-item>
                                     </lightning-layout>
                                 </lightning-layout-item>

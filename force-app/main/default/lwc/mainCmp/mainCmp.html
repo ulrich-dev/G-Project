@@ -5,14 +5,17 @@
                     <c-nav-bar-menu  ontask_event={handleNewTask} allrss={allrss} onnewresource={handleNewResource}></c-nav-bar-menu>
                 </lightning-layout-item>
                 <template if:true={isNewTask}>
-                    <c-modal-cmp onclosemodal={closeModal} onapexrefresh={apexRefresh} items={newTaskItems} title={title}></c-modal-cmp>
+                    <c-modal-cmp onclosemodal={closeModal} onrefres_apex={apexRefresh} items={newTaskItems} title={title}></c-modal-cmp>
                 </template>
                 <template if:true={isNewResource}>
-                    <c-modal-cmp onclosemodal={closeModal} onapexrefresh={apexRefresh} items={newResourceItems} title={title}></c-modal-cmp>
+                    <c-modal-cmp onclosemodal={closeModal} onrefres_apex={apexRefresh} items={newResourceItems} title={title}></c-modal-cmp>
+                </template>
+                <template if:true={isdetailCmp}>
+                    <c-detail-modal-cmp></c-detail-modal-cmp>
                 </template>
                 <lightning-layout-item flexibility="grow" size="9">
                     <c-header-Cmp onhandleactivemenu={handleactivemenu} project={project} ></c-header-Cmp>
-                    <c-section-Cmp activemenu={activeMenu} onrefres_apex={apexRefresh} ontask_event={handleNewTask} tasks={tasks} > </c-section-Cmp>
+                    <c-section-Cmp activemenu={activeMenu} ass_task={assTask} onrefres_apex={apexRefresh} ontask_event={handleNewTask} tasks={tasks} > </c-section-Cmp>
                 </lightning-layout-item>
 
             </lightning-layout>

@@ -13,7 +13,11 @@ export default class MainCmp extends LightningElement {
     @track isNewResource=false;
     @track tasks
     @track allrss
+    @track assTask
     @track wiredTaskList =[]
+    @track taskId='';
+    @track isdetailCmp;
+
 
     project={name:''};
     title
@@ -28,6 +32,7 @@ export default class MainCmp extends LightningElement {
         console.log('Data', result.data);
         this.project = result.data.p;
         this.tasks =result.data.Tasks;
+        this.assTask = result.data.assTask;
         //all ressourcies
         this.allrss = result.data.allrss;
       } else if (result.error) {
@@ -48,17 +53,23 @@ export default class MainCmp extends LightningElement {
         this.activeMenu = event.detail._active_menu;
     }
 
+    
+    handleOpenDetail(event){
+        this.isdetailCmp= this.isdetailCmp? false:true ;
+    }
+
     handleNewTask(event){
         console.log("newtask in main component ");
         let _active_menu = event.detail.action;
-        this.resId = event.detail.Id;
-        this.isNewTask = _active_menu === "newtask"?true : false;
-
-        if( _active_menu === "edittask"){
-              this.isNewTask = _active_menu === "edittask"?true : false;
+        if(_active_menu ==='newtask'){
+            this.resId = event.detail.Id;
+            this.title ="New Task";
         }
-     
-        this.title ="New Task";
+        if(_active_menu ==='edittask'){
+            this.taskId =event.detail?.Id;
+            this.title ="Edit Task";    
+        } 
+        this.isNewTask = _active_menu != ""?true : false;
 
     }
 
@@ -85,7 +96,14 @@ export default class MainCmp extends LightningElement {
     }
 
     get newTaskItems(){
-        return [
+        let taskRecord;
+        console.log("find task");
+        if(this.taskId){ 
+                taskRecord = this.tasks.filter(item => {
+                return item.Id == this.taskId;
+            })[0];
+        }
+            return [
             
             {
                 picklist :false,
@@ -104,16 +122,15 @@ export default class MainCmp extends LightningElement {
                 picklist :false,
                 textarea :false,
                 helpText :'Name',
-                name :'nameTask',
+                name : taskRecord? taskRecord.Id : '',
                 placeholder :'Task Name',
                 PhoneNumber :'tel',
                 type :'text',
                 required :true,
                 label :'Name',
-                value : '',
+                value : taskRecord? taskRecord.Name : '',
                 max :15,
                 maxlength :30,
-                pattern :''
             },
 
               {
@@ -122,14 +139,10 @@ export default class MainCmp extends LightningElement {
                 helpText :'Start date',
                 name :'Startdate',
                 placeholder :'Start date',
-                PhoneNumber :'',
                 type :'date',
                 required :true,
                 label :'Start date',
-                value : '',
-                max :15,
-                maxlength :30,
-                pattern :''
+                value : taskRecord? taskRecord.Start_date__c : '',
             },
 
               {
@@ -142,10 +155,7 @@ export default class MainCmp extends LightningElement {
                 type :'date',
                 required :true,
                 label :'End date',
-                value : '',
-                max :15,
-                maxlength :30,
-                pattern :''
+                value : taskRecord? taskRecord.End_date__c : '',
             },
 
              {
@@ -159,7 +169,7 @@ export default class MainCmp extends LightningElement {
                 required :true,
                 label :'Status',
                 options: this.options,
-                value : '',
+                value : taskRecord? taskRecord.Status__c : '',
                 max :15,
                 maxlength :30,
             },
@@ -175,7 +185,7 @@ export default class MainCmp extends LightningElement {
                 required :true,
                 label :'Resource',
                 options: [...this.allrss.map(item =>({ label:item.Name ,value:item.Id}))],
-                value : this.resId !=''? this.allrss.filter(item => { return item.Id == this.resId; })[0].Id :'',
+                value : this.resId !=''? this.allrss.filter(item => { return item.Id == this.resId; })[0].Id :taskRecord? taskRecord.Ressource__c : '',
                 max :15,
                 maxlength :30,
             },
@@ -189,12 +199,16 @@ export default class MainCmp extends LightningElement {
                 type :'text',
                 required :true,
                 label :'Description',
-                value :'',
+                value : taskRecord? taskRecord.Description__c : '',
                 max :14,
                 maxlength :155,
             }
             ] ;
-    }
+
+            this.resId ='';
+    
+}
+
     get newResourceItems(){
         return  [
             

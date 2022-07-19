@@ -1,0 +1,11 @@
+<template>        
+         <div class="">
+             <lightning-button-menu class={bg_color} title={task.Priority__c} icon-name="utility:priority" variant="container" alternative-text="Show menu" menu-alignment="auto">
+                 <template for:each={options} for:item="item" > 
+                 <lightning-menu-item key={item.Id} value={item.label} data-id={task.Id} onclick={handleClick} label={item.label} prefix-icon-name={item.icon_name} class-name={item.color_name}></lightning-menu-item>
+             </template>
+                
+             </lightning-button-menu>
+         </div>
+    
+ </template>
