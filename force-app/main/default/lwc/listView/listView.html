@@ -40,23 +40,23 @@
                                         <lightning-layout-item size="6" ali flexibility="grow">
                                             <span>
                                                 <lightning-icon class="icon-right slds-p-left_x-small" icon-name="utility:right" alternative-text="right" title="right" size="xx-small"></lightning-icon>
-                                                {item.Name}
-                                                <lightning-icon class="icon-edit slds-p-left_medium" data-id={item.Id} onclick={handleEdit}  icon-name="utility:edit" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
+                                                <span data-id={item.Id} onclick={openDetailsCmp}>{item.Name}</span>
+                                                <lightning-icon class="icon-edit slds-p-left_medium" data-id={item.Id}  icon-name="utility:edit" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
                                                 <label for="upload">
                                                     <lightning-icon class="icon-attach slds-p-left_x-small" data-id={item.Id} onclick={handleAttach} icon-name="utility:attach" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
-                                                    <input type="file" data-id={item.Id} onchange={handleFile} id="upload" style="display:none"/>
+                                                    <input type="file" data-id={item.Id} accept=".png, .jpg, .jpeg, .pdf" onchange={handleFile} id="upload" style="display:none"/>
                                                 </label>
                                                 <lightning-icon class="icon-delete slds-p-left_x-small" data-id={item.Id}  onclick={handleDelete} icon-name="utility:delete" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
                                             </span>
                                         </lightning-layout-item>
-                                        <lightning-layout-item class="slds-align_absolute-center" size="2" flexibility="grow">
+                                        <lightning-layout-item data-id={item.Id} onclick={openDetailsCmp}  class="slds-align_absolute-center" size="2" flexibility="grow">
                                                 <div if:true={item.IsAssign} class="assignTo-box slds-m-bottom_xx-small slds-m-top_xx-small">{item.firstOne}</div>   
                                                 <div if:false={item.IsAssign} class="assingnTo-text slds-m-bottom_xx-small slds-m-top_xx-small">No assign</div>   
                                         </lightning-layout-item>
-                                        <lightning-layout-item class="slds-align_absolute-center"  size="2" flexibility="grow">
+                                        <lightning-layout-item data-id={item.Id} onclick={openDetailsCmp} class="slds-align_absolute-center"  size="2" flexibility="grow">
                                                 <span class="date-echeance">{item.date_echeance}</span>   
                                         </lightning-layout-item>
-                                        <lightning-layout-item  class="slds-align_absolute-center" size="2" flexibility="grow">
+                                        <lightning-layout-item class="slds-align_absolute-center" size="2" flexibility="grow">
                                             <c-priority-cmd  onrefres_apex={handleApexRefresh} priority={item}></c-priority-cmd>
                                             <!-- <lightning-icon class="Selected slds-m-left_medium" icon-name="utility:priority" size="x-small" alternative-text="adduser!" title="Warning"></lightning-icon> -->
                                         </lightning-layout-item>
@@ -70,5 +70,8 @@
                 </template>
             </template>
         </lightning-layout>
+            <template if:true={isTaskDetailCmp}>
+                <c-task_details-cmp  selectedtask={getSelectedTask} onclosemodal={closeTaskDetailCmp}></c-task_details-cmp>
+            </template>
     </div>
 </template>

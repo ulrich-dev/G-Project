@@ -23,6 +23,10 @@ get isResource(){
     return this.item.isResource;
 }
 
+get isDocument(){
+    return this.item.isDocument;
+}
+
 //this function is use to fire the name of active block
 handleClick(event){
     console.log("displach class");

@@ -2,7 +2,7 @@
         <div class="c-container slds-card">
             <lightning-layout>
                 <lightning-layout-item flexibility="grow" size="3">
-                    <c-nav-bar-menu  ontask_event={handleNewTask} allrss={allrss} onnewresource={handleNewResource}></c-nav-bar-menu>
+                    <c-nav-bar-menu  ontask_event={handleNewTask} allrss={allrss} documents={documents} onnewresource={handleNewResource}></c-nav-bar-menu>
                 </lightning-layout-item>
                 <template if:true={isNewTask}>
                     <c-modal-cmp onclosemodal={closeModal} onrefres_apex={apexRefresh} items={newTaskItems} title={title}></c-modal-cmp>

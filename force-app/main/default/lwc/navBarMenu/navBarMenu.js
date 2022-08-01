@@ -9,7 +9,25 @@ import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_modul
 
 export default class NavBarMenu extends LightningElement {
     url = myResource + '.jpeg';
+    doc;
 
+    @api
+    get documents() {
+        return this.doc;
+    }
+    set documents(value) {
+        if(value){
+            this.items.forEach(element => {
+                if(element.name === 'Documents'){
+                        element.subItem =[...value.map(item =>({...item,
+                                                label:item.title,
+                                                name:item.id,
+                                                icon_name: 'utility:download'
+                                            }))];
+                }
+            });
+        }
+    }
     get geturl(){
         console.log('url',this.url);
         return this.url;
@@ -41,6 +59,7 @@ export default class NavBarMenu extends LightningElement {
                     isActive :false,
                     incon_name: "utility:chevronright",
                     isResource:false,
+                    isDocument:false,
                     subItem : [
                             {
                                 label:"Favoris",
@@ -58,6 +77,7 @@ export default class NavBarMenu extends LightningElement {
                     isActive :false,
                     incon_name: "utility:chevronright",
                     isResource:true,
+                    isDocument:false,
                     subItem : [
                             {
                                  label:"Favoris",
@@ -76,6 +96,7 @@ export default class NavBarMenu extends LightningElement {
                     isActive :false,
                     incon_name: "utility:chevronright",
                     isResource:false,
+                    isDocument:true,
                     subItem : [
                             {
                                 label:"Favoris",

@@ -1,0 +1,38 @@
+<template>
+    <div>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+                <span>
+                    <span class="slds-text-heading_medium slds-hyphenate">{taskName}</span>
+                    <span class="close-box slds-p-around_xx-small">
+                        <lightning-icon class="icon-color" onclick={closeModal}  icon-name="utility:close" size="small" alternative-text="adduser!" title="Warning"></lightning-icon>
+                        </span>
+                </span>
+            </header>
+        
+            <!-- modal body start -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="6">
+                        <lightning-record-edit-form
+                        object-api-name={objectApiName}
+                        record-id={recordId}
+                    >
+                        <lightning-input-field field-name={nameField}></lightning-input-field>
+                        <div class="slds-var-m-top_medium">
+                            <lightning-button variant="brand" type="submit" label="Save">
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6">
+                        <c-tab-set task_id={selectedtask.Id}></c-tab-set>
+                    </lightning-layout-item>
+                </lightning-layout>        </div>     
+            </div>
+        </section>
+     <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

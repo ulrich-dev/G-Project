@@ -2,6 +2,7 @@ import { track,api,wire,LightningElement } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import getTask from '@salesforce/apex/projectManagerCtl.getTask';
 import getTaskPicklist from '@salesforce/apex/projectManagerCtl.getTaskPicklist';
+import getFilesList from '@salesforce/apex/projectManagerCtl.getFilesList';
 
 export default class MainCmp extends LightningElement {
 
@@ -17,6 +18,7 @@ export default class MainCmp extends LightningElement {
     @track wiredTaskList =[]
     @track taskId='';
     @track isdetailCmp;
+    @track documents;
 
 
     project={name:''};
@@ -47,6 +49,17 @@ export default class MainCmp extends LightningElement {
       } else if (error) {
         console.error('Error:', error);
       }
+    }
+
+    @wire(getFilesList, {recordId :'a027Q000003QtG3QAK'})
+    document ({error, data}) {
+        if (error) {
+            // TODO: Error handling
+        } else if (data) {
+            // TODO: Data handling
+            console.log('@@@@§/document Ids',data);
+            this.documents = data;
+        }
     }
 
     handleactivemenu(event){

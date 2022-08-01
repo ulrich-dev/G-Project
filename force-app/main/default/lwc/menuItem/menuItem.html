@@ -22,10 +22,18 @@
             <template if:true={item.subItem}>
                 <template for:each={item.subItem} for:item="item">
                     <lightning-layout-item class="slds-p-left_large slds-p-top_x-small slds-p-bottom_x-small sub-item-style" size="12" key={item.label}>
-                        <span class="slds-p-bottom_small">{item.label}</span>
+                        <!-- for document -->
+                        <template if:true={isDocument}>
+                            <span class="f-color"><lightning-icon icon-name='utility:file' size="x-small" alternative-text="Warning!" title="Warning"></lightning-icon></span>
+                        </template> 
+                        <span class="slds-p-bottom_small slds-m-left_x-small">{item.label}</span>
                         <template if:true={isResource}>
                             <span onclick={handleNewTask} data-id={item.Id} class="new-task slds-p-right_medium"> + New Task</span>
-                        </template>  
+                        </template>
+                        <!-- for document -->
+                        <template if:true={isDocument}>
+                            <span class="slds-m-right_small" style="display: flex;float: right;"><lightning-icon icon-name={item.icon_name} size="x-small" alternative-text="Warning!" title="Warning"></lightning-icon></span>
+                        </template>
                     </lightning-layout-item>
                 </template>
             </template>

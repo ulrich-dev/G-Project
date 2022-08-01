@@ -1,8 +1,5 @@
 import { api,track,LightningElement } from 'lwc';
 
-import uploadFile from '@salesforce/apex/projectManagerCtl.uploadFile';
-
-
 import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
 import LightningConfirm from 'lightning/confirm';
 
@@ -18,6 +15,8 @@ export default class ListView extends LightningElement {
 fileData;
 fileName
 recordId
+isTaskDetailCmp
+task
 
     @api
     get tasks() {
@@ -41,11 +40,12 @@ recordId
     }
 
     handleEdit(event){  
+        event.stopPropagation();
         dispash_event('task_event',this,{action:'edittask',Id :event.currentTarget.dataset.id});
     }
 
     handleAttach(event){
-
+        event.stopPropagation();
     }
     handleSelected(event){
 
@@ -57,6 +57,7 @@ recordId
     }
 
     handleFile(event){
+        event.stopPropagation();
         console.log('fille change');
         if(event.target.files.length > 0) {
             const file = event.target.files[0]
@@ -75,10 +76,11 @@ recordId
             //upload File 
             this.uploadFile();
         }
-
+        event.preventDefault();
     }
 
     uploadFile() {
+        event.stopPropagation();
         console.log('start send file');
         const {base64, filename} = this.fileData
         uploadFile({ fileName:this.fileName, base64Data : base64, recordId:this.recordId }).then(result=>{
@@ -90,9 +92,11 @@ recordId
             toast_event('Error!!',err.body.message,'error',this);
         }).finally(() => {
         })
+
     }
 
     async handleDelete(event){
+        event.stopPropagation();
         let taskId = event.currentTarget.dataset.id;
         console.log('console.log');
         const result = await LightningConfirm.open({
@@ -105,6 +109,27 @@ recordId
                 let rep = delete_task(taskId,this);
                 toast_event('deleted','deleted successful','success',this);
         }
+    }
+    get getSelectedTask(){
+        return this.task;
+    }
+
+    openDetailsCmp(event){
+        this.result.forEach(element => {
+            element.selectedItems.forEach(item => {
+                if(item.Id === event.currentTarget.dataset.id){
+                    this.task = item;
+                }
+            });
+        });
+       
+        console.log('selected item',JSON.stringify(this.task ));
+        this.isTaskDetailCmp =true;
+        event.stopPropagation();
+    }
+
+    closeTaskDetailCmp(){
+        this.isTaskDetailCmp =false;
     }
 
 }

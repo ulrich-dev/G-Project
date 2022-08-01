@@ -20,6 +20,17 @@ public with sharing class projectManagerCtl {
         }
     }
 
+    @AuraEnabled
+    public static List<FeedItem> retriveFeedItems(String recordId){
+        try {
+            System.debug('record id '+recordId);
+            return [select Id, ParentId,insertedby.name,insertedby.profile.name,createdDate,body,(select id,CommentBody from FeedComments) IsClosed, Status from FeedItem WHERE ParentId =: recordId];
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        
+    }
+
      /*
     *************************************************************************************************************
     * Below method is issed to get the picklist value.
@@ -38,34 +49,83 @@ public with sharing class projectManagerCtl {
     }
 
     @AuraEnabled
-    public static String uploadFile(String fileName, String base64Data, Id recordId) {
-        // Decoding the base64Data
-        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
-        ContentVersion cv = new ContentVersion();
-            cv.Origin = 'H';
-            cv.PathOnClient = fileName; 
-            cv.ContentLocation = 'S'; 
-            cv.Title = fileName;
-            cv.PathOnClient = '/'+ fileName;
-            cv.VersionData = EncodingUtil.base64Decode(base64Data);
-            cv.IsMajorVersion =false; 
-            cv.FirstPublishLocationId = recordId;
-
-            Insert cv;
-        return 'File upload successfully!';
+    public static Id createContentDocLink(Id contentVersionId, Id recordId) {
+        Id docId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :contentVersionId].ContentDocumentId;
+        insert new ContentDocumentLink(ContentDocumentId = docId, LinkedEntityId = recordId);
+        return docId;
     }
 
 
+    @AuraEnabled(cacheable=true)
+    public static FilesWrapper[] getFilesList(Id recordId) {
+        FilesWrapper[] filesList = new List<FilesWrapper>{};
+            for (ContentDocumentLink link : [
+                SELECT
+                ContentDocumentId,
+                ContentDocument.LatestPublishedVersion.Title,
+                ContentDocument.LatestPublishedVersion.CreatedDate,
+                ContentDocument.LatestPublishedVersion.CreatedBy.Name
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId = :recordId
+            ]) {
+                filesList.add(
+                    new FilesWrapper(
+                        link.ContentDocumentId,
+                        link.ContentDocument.LatestPublishedVersion.Title,
+                        link.ContentDocument.LatestPublishedVersion.CreatedBy.Name,
+                        Date.valueOf(link.ContentDocument.LatestPublishedVersion.CreatedDate),
+                        link.ContentDocument.LatestPublishedVersionId
+                    )
+                );
+            }
+        return filesList;
+    } 
+    
     @AuraEnabled
-    public static List<String> getAllDocument(List<String> taskIds){
-        try {
-            
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+    public static FileVersionWrapper[] getFileVersionDetails(Id fileId) {
+        FileVersionWrapper[] contentversions = new List<FileVersionWrapper>{};
+            for (ContentVersion cv : [SELECT id,title,contenturl,createddate, createdby.name, ReasonForChange FROM ContentVersion WHERE ContentDocumentId = :fileId]) {
+                contentVersions.add(new FileVersionWrapper(cv.id, cv.title, cv.createdby.name, Date.valueOf(cv.createddate), cv.ReasonForChange,cv.contenturl));
+            }
+        return contentVersions;
+    } 
+    
+     public virtual class File{
+        @AuraEnabled
+        public String id { get; set; }
+        @AuraEnabled
+        public String title { get; set; }
+        @AuraEnabled
+        public String createdBy { get; set; }
+        @AuraEnabled
+        public Date createdDate { get; set; }
+        public File(String id, String title, String createdBy, Date createdDate) {
+            this.id = id;
+            this.title = title;
+            this.createdBy = createdBy;
+            this.createdDate = createdDate;
         }
-
-
-        return new  List<String>();
     }
-  
+
+    public class FilesWrapper extends File{
+        @AuraEnabled
+        public String latestVersionId { get; set; }
+        
+        public FilesWrapper(String id, String title, String createdBy, Date createdDate, String latestVersionId) {
+           	super(id, title, createdBy, createdDate);
+            this.latestVersionId = latestVersionId;
+        }
+    }
+
+    public class FileVersionWrapper extends File{
+        @AuraEnabled
+     public String reasonForChange { get; set; }
+     @AuraEnabled
+     public String contentUrl { get; set; }
+     public FileVersionWrapper(String id, String title, String createdBy, Date createdDate, String reasonForChange,string contentUrl) {
+            super(id, title, createdBy, createdDate);
+         this.reasonForChange = reasonForChange;
+         this.contentUrl=contentUrl;
+     }
+ } 
 }
