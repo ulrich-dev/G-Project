@@ -4,6 +4,6 @@
 }
 
 :host {
-    --primaryColor:  rgb(168, 117, 255);
-    --secondaryColor:#dfdbfb;
- }
+    --primaryColor: rgb(255, 117, 158);
+    --secondaryColor: rgb(255, 117, 158);
+}

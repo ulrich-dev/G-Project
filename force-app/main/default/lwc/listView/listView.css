@@ -60,6 +60,7 @@ span{
 
 }
 
+
 .assignTo-box{
     border-radius: 52px;
     width: 22px;
@@ -80,4 +81,7 @@ span{
     font-size: 8px;
     color: #c11c1c;
     font-family: Arial, Helvetica, sans-serif;
+}
+.icon-favorite{
+    cursor: pointer;
 }

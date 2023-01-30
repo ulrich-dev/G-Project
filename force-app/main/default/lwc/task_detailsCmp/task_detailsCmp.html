@@ -18,9 +18,27 @@
                     <lightning-layout-item size="6">
                         <lightning-record-edit-form
                         object-api-name={objectApiName}
-                        record-id={recordId}
+                        record-id={taskId}
                     >
-                        <lightning-input-field field-name={nameField}></lightning-input-field>
+
+                    
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name={projetField}></lightning-input-field>
+                            <lightning-input-field field-name={nameField}></lightning-input-field>
+                            <lightning-input-field field-name={statusField}></lightning-input-field>
+                            
+                        
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name={RessourceField}></lightning-input-field>
+                                <lightning-input-field field-name={startField}></lightning-input-field>
+                                <lightning-input-field field-name={Enddate}></lightning-input-field> 
+                        </div>
+                    </div>
+
+                    <lightning-input-field field-name={Description} ></lightning-input-field> 
+
                         <div class="slds-var-m-top_medium">
                             <lightning-button variant="brand" type="submit" label="Save">
                             </lightning-button>

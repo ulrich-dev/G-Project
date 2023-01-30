@@ -1,11 +1,14 @@
 import { api,track,LightningElement } from 'lwc';
 
-import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
+import { delete_task,refresh_apex,dispash_event,toast_event,update_task } from 'c/util_module';
 import LightningConfirm from 'lightning/confirm';
+import createContentDocLink from "@salesforce/apex/projectManagerCtl.createContentDocLink";
 
 
+import { deleteRecord, createRecord } from "lightning/uiRecordApi";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
-
+const BASE64EXP = new RegExp(/^data(.*)base64,/);
 export default class ListView extends LightningElement {
 
 @track result;
@@ -44,9 +47,7 @@ task
         dispash_event('task_event',this,{action:'edittask',Id :event.currentTarget.dataset.id});
     }
 
-    handleAttach(event){
-        event.stopPropagation();
-    }
+ 
     handleSelected(event){
 
     }
@@ -56,45 +57,83 @@ task
         refresh_apex(this);
     }
 
-    handleFile(event){
-        event.stopPropagation();
-        console.log('fille change');
-        if(event.target.files.length > 0) {
-            const file = event.target.files[0]
-            this.recordId = event.currentTarget.dataset.id;
-            var reader = new FileReader()
-            reader.onload = () => {
-                var base64 = reader.result.split(',')[1]
-                this.fileName = file.name;
-                this.fileData = {
-                    'filename': file.name,
-                    'base64': base64
-                }
-                console.log(this.fileData)
-            }
-            reader.readAsDataURL(file)
-            //upload File 
-            this.uploadFile();
+    handleUpload(event) {
+        try {
+          const file = event.target.files[0];
+          this.recordId = event.currentTarget.dataset.id;
+          const reader = new FileReader();
+          let fileData = "";
+          reader.onload = () => {
+            fileData = reader.result;
+            this.uploadFile(file, fileData);
+          };
+          reader.readAsDataURL(file);
+        } catch (err) {
+          console.error(err);
+          this.dispatchEvent(
+            new ShowToastEvent({
+              variant: "error",
+              message: `File upload failed: ${err.body.message || err.body.error}`
+            })
+          );
         }
-        event.preventDefault();
-    }
-
-    uploadFile() {
         event.stopPropagation();
-        console.log('start send file');
-        const {base64, filename} = this.fileData
-        uploadFile({ fileName:this.fileName, base64Data : base64, recordId:this.recordId }).then(result=>{
-            this.fileData = null
-            this.fileName =""
-            let title = `${filename} uploaded successfully!!`;
-            toast_event('Success!',title,'success',this);
-        }).catch(err=>{
-            toast_event('Error!!',err.body.message,'error',this);
-        }).finally(() => {
+      } 
+
+      uploadFile(file, fileData) {
+        const payload = {
+          Title: file.name,
+          PathOnClient: file.name,
+          VersionData: fileData.replace(BASE64EXP, "")
+        };
+        createRecord({ apiName: "ContentVersion", fields: payload })
+          .then((cVersion) => {
+              this.createContentLink(cVersion.id);
+              this.dispatchEvent(
+                new ShowToastEvent({
+                  variant: "success",
+                  message: `Content Document Version created ${cVersion.id}`
+                })
+              );
+            
+          })
+          .catch((err) => {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                variant: "error",
+                message: `File upload failed: ${err.body.message || err.body.error}`
+              })
+            );
+          });
+      } 
+    
+      createContentLink(cvId) {
+        console.log('created content document id',this.recordId);
+        console.log('created content verssion id',cvId);
+       createContentDocLink({
+          contentVersionId: cvId,
+          recordId: this.recordId
         })
-
-    }
-
+          .then((cId) => {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                variant: "success",
+                message: `File uploaded successfully ${cId}`
+              })
+            );
+          })
+          .catch((err) => {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                variant: "error",
+                message: `An error occurred: ${
+                  err.body ? err.body.message || err.body.error : err
+                }`
+              })
+            );
+          });
+      }
+      
     async handleDelete(event){
         event.stopPropagation();
         let taskId = event.currentTarget.dataset.id;
@@ -105,13 +144,30 @@ task
             header:'Confirm delete',
             // setting theme would have no effect
         });
-        if(result){      
+        if(result){        
                 let rep = delete_task(taskId,this);
                 toast_event('deleted','deleted successful','success',this);
         }
     }
     get getSelectedTask(){
         return this.task;
+    }
+
+    //update favorie flag
+    handleFavorite(event){
+        let curent_Task;
+        this.result.forEach(element => {
+            element.selectedItems.forEach(item => {
+                if(item.Id === event.currentTarget.dataset.id){
+                    curent_Task = item;
+                }
+            });
+        });
+        let fields={
+            Id : event.currentTarget.dataset.id,
+            flag_favorie__c : curent_Task.flag_favorie__c? false : true
+        }
+        update_task(fields,this);
     }
 
     openDetailsCmp(event){

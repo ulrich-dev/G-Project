@@ -3,10 +3,10 @@
         <div class="slds-tabs_default">
             <ul class="slds-tabs_default__nav slds-card slds-align_absolute-center" role="tablist">
                 <li class="slds-size_1-of-2" title="Item One" role="presentation">
-                      <a class={selectedTab} href="#" onclick={handleTab} role="tab" tabindex="0" name="tab1"  id="tab1">FILES</a>
+                      <a class={selectedTab} href="#" onclick={handleTab} role="tab" tabindex="0" name="tab1"  id="tab1">POST</a>
                 </li>
                 <li class=" slds-size_1-of-2" title="Item Two" role="presentation">
-                      <a class={selectedTab21} href="#" role="tab" tabindex="-1" onclick={handleTab}  name="tab2"  id="tab2">POST</a>
+                      <a class={selectedTab21} href="#" role="tab" tabindex="-1" onclick={handleTab}  name="tab2"  id="tab2">FILES</a>
                 </li>
             </ul>
                 
@@ -14,16 +14,25 @@
   
         <!-- data table  one content****************************************************** -->
             <template if:true={hideContent}>
-                <lightning-layout  size="12">
-                     datatable 1
-                </lightning-layout>
-            </template>
-       
-         <!-- data table  two content****************************************************** -->
-       
-            <template if:false={hideContent}>
-                    <lightning-layout>
-                        <lightning-layout-item size="12">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12">
+                        <lightning-button label={labelBtn} title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small slds-float_right"></lightning-button>
+                            <div if:true={isShowPostFields}>
+                                <p class="slds-m-top_x-large">
+                                    <!-- <lightning-textarea name="input3" data-id="message" label="Message" placeholder="type here..."></lightning-textarea> -->
+                                    <lightning-input-rich-text
+                                        data-id="message"
+                                        class="slds-m-bottom_small">
+                                  </lightning-input-rich-text>
+                                </p>
+                                <p>
+                                    <lightning-button variant="brand" class="slds-float_right" onclick={handlePostSave} type="submit" label="Save">
+                                    </lightning-button>                      
+                                </p>
+                              
+                            </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
                             <template if:true={feedItem}>
                                 <template for:each={feedItem} for:item="item">
                                     <div class="slds-feed" key={item.Id}>
@@ -67,7 +76,7 @@
                                                                 </svg>Like</button>
                                                             </li>
                                                             <li class="slds-col slds-item slds-m-right_medium">
-                                                                <button title="Comment on this item" class="slds-button_reset slds-post__footer-action">
+                                                                <button title="Comment on this item" data-id={item.Id}  class="slds-button_reset slds-post__footer-action" onclick={handleShowCommentField}>
                                                                 <svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-align-middle" aria-hidden="true">
                                                                 <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#share_post"></use>
                                                                 </svg> Comment</button>
@@ -85,12 +94,28 @@
                                                         </ul>
                                                     </footer>
                                                 </article>
-                                                <div class="slds-feed__item-comments">
-                                                <div class="slds-p-horizontal_medium slds-p-vertical_x-small slds-grid">
-                                                    <button class="slds-button_reset slds-text-link">More comments</button>
-                                                    <span class="slds-text-body_small slds-col_bump-left">1 of 8</span>
+                                                <!-- comment fields -->
+                                                <div if:true={item.isShowPostComment}>
+                                                    <p class="">
+                                                        <lightning-input-rich-text
+                                                            data-id="comment"
+                                                            class="slds-m-bottom_small">
+                                                        </lightning-input-rich-text>
+                                                        <!-- <lightning-textarea name="input3" data-id="comment" placeholder="type here..."></lightning-textarea> -->
+                                                    </p>
+                                                    <p class="slds-m-bottom_xx-large">
+                                                        <lightning-button name={item.Id} variant="brand" class="slds-float_right" onclick={handleCommentSave} type="submit" label="Save">
+                                                        </lightning-button>                      
+                                                    </p>
                                                 </div>
-                                                    <ul>
+                                                <div class="slds-feed__item-comments">
+                                                <template if:true={item.FeedComments}>
+                                                    <div class="slds-p-horizontal_medium slds-p-vertical_x-small slds-grid">
+                                                        <button data-id={item.Id} onclick={handleMoreComments} class="slds-button_reset slds-text-link">{item.comment_label}</button>
+                                                        <span class="slds-text-body_small slds-col_bump-left">1 of {item.comnt_size}</span>
+                                                    </div>
+                                                    <template for:each={item.copyComments} for:item="comment">
+                                                    <ul key={comment.Id}>
                                                         <li>
                                                         <article class="slds-comment slds-media slds-hint-parent">
                                                             <div class="slds-media__figure">
@@ -101,7 +126,7 @@
                                                                 <header class="slds-media slds-media_center">
                                                                     <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
                                                                         <p class="slds-truncate" title="Jenna Davis">
-                                                                        <a href="#">Jenna Davis</a>
+                                                                        <a href="#">{comment.CreatedBy.Name}</a>
                                                                         </p>
                                                                         <button class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-x-small" aria-haspopup="true" title="More Options">
                                                                         <svg class="slds-button__icon" aria-hidden="true">
@@ -111,7 +136,9 @@
                                                                         </button>
                                                                     </div>
                                                                 </header>
-                                                                <div class="slds-comment__content slds-text-longform">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                                <div class="slds-comment__content slds-text-longform">
+                                                                    <lightning-formatted-rich-text value={comment.CommentBody}></lightning-formatted-rich-text>
+                                                                </div>
                                                                 <footer>
                                                                     <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
                                                                     <li class="slds-item">
@@ -124,12 +151,40 @@
                                                             </article>
                                                             </li>
                                                         </ul>
+                                                        </template>
+                                                    </template>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
                             </template>
-                            </template>
+                        </template>
+                        </lightning-layout-item>
+                            <div>
+                                            
+                            </div>
+                </lightning-layout>
+            </template>
+       
+         <!-- data table  two content****************************************************** -->
+       
+            <template if:false={hideContent}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" >
+                            <lightning-button 
+                                    variant="brand" 
+                                    class="slds-float_right slds-m-around_xxx-small" 
+                                    onclick={handleDownload} 
+                                    type="submit" label="Download">
+                            </lightning-button>
+                        </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                            <lightning-datatable
+                                key-field="id"
+                                data={data}
+                                columns={columns}
+                                onrowselection={handleSelectedRow}>
+                             </lightning-datatable>
                         </lightning-layout-item>
                     </lightning-layout>
            </template>

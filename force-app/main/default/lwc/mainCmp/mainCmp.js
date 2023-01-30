@@ -51,7 +51,7 @@ export default class MainCmp extends LightningElement {
       }
     }
 
-    @wire(getFilesList, {recordId :'a027Q000003QtG3QAK'})
+    @wire(getFilesList, {recordId :'$recordId',sObjt:'project__c' })
     document ({error, data}) {
         if (error) {
             // TODO: Error handling

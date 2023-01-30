@@ -180,7 +180,9 @@ export default class SectionCmp extends LightningElement {
                     const dateOne = new Date(item.End_date__c); 
                     const dateTwo = new Date(item.Start_date__c);
                     let date_echeance = Math.abs(dateOne-dateTwo)/(1000 * 3600 * 24);
-                    return {...item,ress:ressourcies,firstOne : ressourcies.length>0? ressourcies[0].Name.substring(0, 1): "",IsAssign :ressourcies.length>0? true :false,date_echeance : date_echeance?date_echeance:"-" };
+                    //set favorite icon color 
+                    let color = item.flag_favorie__c? '--lwc-colorTextIconDefault : #fbe855;':'';
+                    return {...item,ress:ressourcies,firstOne : ressourcies.length>0? ressourcies[0].Name.substring(0, 1): "",IsAssign :ressourcies.length>0? true :false,date_echeance : date_echeance?date_echeance:"-", favoriteIconColor: color};
                     
                 })]
 

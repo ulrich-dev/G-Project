@@ -9,6 +9,9 @@ const CLOSED ="Closed";
 export default class TabView extends LightningElement {
 
 isSameRows= false; 
+@track
+isTaskDetailCmp =false;
+selectedTask;
 
 @api
 get tasks() {
@@ -130,6 +133,23 @@ set tasks(tasksList) {
     edittask(event){
         console.log('event detail ',event.detail);
         dispash_event('task_event',this,event.detail);
+    }
+
+    //close modal
+    closeTaskDetailCmp(event){
+        this.isTaskDetailCmp =false;
+    }
+
+    get getSelectedTask(){
+        return this.selectedTask;
+    }
+
+
+
+    //open modat
+    handleShowDetails(event){
+        this.selectedTask =event.detail;
+        this.isTaskDetailCmp =true;
     }
 
     handleDragComplete(event) {

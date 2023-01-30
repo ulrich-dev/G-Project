@@ -3,18 +3,21 @@
         {title}
     </div>
     <div class="droparea" ondragover={cancel} ondragenter={cancel} ondrop={handleDragComplete}>
-        <div key={item.Id} class="row slds-m-left_large task-box slds-m-top_small slds-p-around_small" ondrop={handleDragComplete}  for:each={itemsWrap} for:item="item" for:index="index" draggable="true"
+        <div key={item.Id}  class="row slds-m-left_large task-box slds-m-top_small slds-p-around_small" ondrop={handleDragComplete}  for:each={itemsWrap} for:item="item" for:index="index" draggable="true"
           ondragstart={handleDragStart} data-id={item.Id}>
           <div class="content-flex">
-            <lightning-icon class="icon-move slds-p-right_xxx-small" icon-name="utility:ban" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
-             <span class="task-name">{item.Name}</span>
+            <span data-id={item.Id} onclick={handleShowDetail}>
+                <lightning-icon class="icon-move slds-p-right_xxx-small" icon-name="utility:ban" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
+                <span class="task-name">{item.Name}</span>
+            </span>
             <lightning-icon class="icon-edit slds-p-left_xx-small" icon-name="utility:edit"  data-id={item.Id} onclick={editeTask} alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
             <label for="upload">
                 <lightning-icon class="icon-attach slds-p-left_x-small" data-id={item.Id} onclick={handleAttach} icon-name="utility:attach" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
                 <input type="file" data-id={item.Id} accept=".png, .jpg, .jpeg, .pdf" onchange={handleUpload} id="upload" style="display:none"/>
-            </label>          </div>
+            </label>         
+         </div>
           <div class="content-flex slds-m-left_medium">
-                <p class="slds-text-body_small slds-m-right_medium"> juin 6 - juin 6</p>
+                <p  data-id={item.Id} onclick={handleShowDetail} class="slds-text-body_small slds-m-right_medium"> juin 6 - juin 6</p>
                 <lightning-icon class="slds-p-left_xx-small delete-icon" data-id={item.Id} onclick={deleteTask} icon-name="utility:delete" style="float: right;" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
           </div>
                 <input type="radio" class="slds-m-top_small raton-btm slds-m-right_xx-small" style="float: right;" name="id" value={item.id}>

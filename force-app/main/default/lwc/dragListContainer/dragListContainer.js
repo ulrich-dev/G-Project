@@ -50,15 +50,27 @@ export default class DragListContainer extends LightningElement {
     )
   }
 
+  //dispash selected task
+  handleShowDetail(event){
+    let taskId = event.currentTarget.dataset.id;
+
+    const evt = new CustomEvent('handle_show_details', {
+        detail:  this.items.filter((item)=> item.Id == taskId)[0]
+    });
+    this.dispatchEvent(evt);
+  }
+
   editeTask(event){
     let taskId = event.currentTarget.dataset.id;
     dispash_event('task_event',this,{action:'edittask',Id :taskId});
+
+    event.stopPropagation();
 
   }
 
 handleUpload(event) {
   try {
-    const file = event.target.files[0]
+    const file = event.target.files[0];
     this.recordId = event.currentTarget.dataset.id;
     const reader = new FileReader();
     let fileData = "";
@@ -76,6 +88,7 @@ handleUpload(event) {
       })
     );
   }
+  event.stopPropagation();
 } 
 
 uploadFile(file, fileData) {
@@ -107,6 +120,8 @@ uploadFile(file, fileData) {
 } 
 
 createContentLink(cvId) {
+  console.log('created content document id',this.recordId);
+  console.log('created content verssion id',cvId);
  createContentDocLink({
     contentVersionId: cvId,
     recordId: this.recordId
@@ -145,11 +160,9 @@ createContentLink(cvId) {
       });
   if(result){      
         let rep=  delete_task(taskId,this);
-        console.log("@@@@@@@deleted");
   }
-   
-  
-    
+
+  event.stopPropagation();
   }
 
 }

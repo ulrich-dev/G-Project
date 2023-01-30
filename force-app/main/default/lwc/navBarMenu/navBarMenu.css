@@ -18,3 +18,8 @@
 .utility-icon{
     float: right;
 }
+img{
+    max-width: 50%;
+    height: auto;
+    display: flex;
+}

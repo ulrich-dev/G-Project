@@ -1,5 +1,6 @@
 import { track,api,LightningElement} from 'lwc';
 import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
+import getFileVersionDetails from '@salesforce/apex/projectManagerCtl.getFileVersionDetails';
 
 
 export default class MenuItem extends LightningElement {
@@ -45,6 +46,34 @@ handleNewResource(event){
     event.stopPropagation();
     const evt = new CustomEvent('newresource', {detail: "newResource"});
     this.dispatchEvent(evt);
+}
+
+//handle show details commponent
+handleShowDetails(event){
+    event.stopPropagation();
+    console.log('@@@ handleShowDetails',event.currentTarget.dataset.id);
+    const evt = new CustomEvent('showdetails', {detail : event.currentTarget.dataset.id });
+    this.dispatchEvent(evt);
+
+}
+
+
+handleMenuFile(event){
+    console.log('file content',event.currentTarget.dataset.id);
+    getFileVersionDetails({fileId: event.currentTarget.dataset.id})
+    .then(result => {
+        console.log('file content',result);
+        const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = result.ContentDownloadUrl;
+          // the filename you want
+          a.download = result.Title;
+          document.body.appendChild(a);
+          a.click();
+    })
+    .catch(error => {
+        // TODO Error handling
+    });
 }
 
 }

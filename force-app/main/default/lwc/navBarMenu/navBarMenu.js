@@ -1,5 +1,5 @@
 import { track,api,LightningElement } from 'lwc';
-import myResource from '@salesforce/resourceUrl/myResource';
+import logo from '@salesforce/resourceUrl/beonelogos';
 import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_module';
 
 
@@ -8,8 +8,11 @@ import { delete_task,refresh_apex,dispash_event,toast_event } from 'c/util_modul
 
 
 export default class NavBarMenu extends LightningElement {
-    url = myResource + '.jpeg';
+    @track
+    url = logo +'.png';
     doc;
+    isTaskDetailCmp = false;
+    selectedTask;
 
     @api
     get documents() {
@@ -48,6 +51,24 @@ export default class NavBarMenu extends LightningElement {
                                                 }))];
                     }
                 });
+        }
+    }
+
+
+    @api
+    get favorite_task() {
+        return this.favorite_task;
+    }
+    set favorite_task(value) {
+        if(value){
+            this.items.forEach(element => {
+                if(element.name === 'Favoris'){
+                        element.subItem =[...value.map(item =>({...item,
+                                                label:item.Name,
+                                                name:item.Id
+                                            }))].filter((item)=>item.flag_favorie__c);
+                }
+            });
         }
     }
 
@@ -143,6 +164,25 @@ export default class NavBarMenu extends LightningElement {
                 let _active_menu = event.detail;
                 const evt = new CustomEvent('newresource', {detail: _active_menu});
                 this.dispatchEvent(evt);
+            }
+
+
+          
+            //open show details commponent 
+            showTaskDerails(event){
+                console.log('@@@selected task id',event.detail);
+                this.items[0].subItem.forEach(item => {
+                    if(item.name === event.detail){
+                         this.selectedTask = item;
+                         this.isTaskDetailCmp =true;
+                    }
+            });
+           
+            }
+
+        
+            closeTaskDetailCmp(event){
+                this.isTaskDetailCmp =false;
             }
 
             

@@ -49,3 +49,6 @@ li{
 .slds-listbox__option:hover{
     background-color: #dd0f7d;
 }
+.f-color{
+    --lwc-colorTextIconDefault: var(--primaryColor);
+}

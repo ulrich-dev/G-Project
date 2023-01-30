@@ -40,13 +40,14 @@
                                         <lightning-layout-item size="6" ali flexibility="grow">
                                             <span>
                                                 <lightning-icon class="icon-right slds-p-left_x-small" icon-name="utility:right" alternative-text="right" title="right" size="xx-small"></lightning-icon>
-                                                <span data-id={item.Id} onclick={openDetailsCmp}>{item.Name}</span>
-                                                <lightning-icon class="icon-edit slds-p-left_medium" data-id={item.Id}  icon-name="utility:edit" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
+                                                <span data-id={item.Id} style="cursor: pointer;" onclick={openDetailsCmp}>{item.Name}</span>
+                                                <lightning-icon class="icon-edit slds-p-left_medium" data-id={item.Id} onclick={handleEdit}  icon-name="utility:edit" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
                                                 <label for="upload">
                                                     <lightning-icon class="icon-attach slds-p-left_x-small" data-id={item.Id} onclick={handleAttach} icon-name="utility:attach" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
-                                                    <input type="file" data-id={item.Id} accept=".png, .jpg, .jpeg, .pdf" onchange={handleFile} id="upload" style="display:none"/>
-                                                </label>
+                                                    <input type="file" data-id={item.Id} accept=".png, .jpg, .jpeg, .pdf" onchange={handleUpload} id="upload" style="display:none"/>
+                                                </label>    
                                                 <lightning-icon class="icon-delete slds-p-left_x-small" data-id={item.Id}  onclick={handleDelete} icon-name="utility:delete" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
+                                                <lightning-icon class="icon-favorite slds-p-left_x-small" style={item.favoriteIconColor} data-id={item.Id}  onclick={handleFavorite} icon-name="utility:favorite" alternative-text="ban" title="ban" size="xx-small"></lightning-icon>
                                             </span>
                                         </lightning-layout-item>
                                         <lightning-layout-item data-id={item.Id} onclick={openDetailsCmp}  class="slds-align_absolute-center" size="2" flexibility="grow">
